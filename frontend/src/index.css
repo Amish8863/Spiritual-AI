@@ -1,0 +1,312 @@
+@import url('https://fonts.googleapis.com/css2?family=Iceland&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Premium Dark Charcoal Palette - NO PURPLE */
+    --background: 215 25% 6%;
+    --foreground: 40 20% 92%;
+
+    --card: 215 20% 8%;
+    --card-foreground: 40 20% 92%;
+
+    --popover: 215 20% 8%;
+    --popover-foreground: 40 20% 92%;
+
+    /* Golden Yellow Accent */
+    --primary: 40 85% 65%;
+    --primary-foreground: 215 25% 6%;
+
+    --secondary: 215 15% 15%;
+    --secondary-foreground: 40 20% 92%;
+
+    --muted: 215 15% 12%;
+    --muted-foreground: 215 10% 55%;
+
+    --accent: 40 85% 65%;
+    --accent-foreground: 215 25% 6%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 40 20% 92%;
+
+    --border: 215 15% 18%;
+    --input: 215 15% 12%;
+    --ring: 40 85% 65%;
+
+    --radius: 0.75rem;
+
+    /* Custom Cosmic Colors - Golden Theme */
+    --cosmic-dark: 215 30% 5%;
+    --cosmic-charcoal: 215 20% 10%;
+    --star-white: 40 30% 95%;
+    --gold: 40 85% 65%;
+    --gold-dim: 40 70% 50%;
+    --gold-glow: 40 100% 70%;
+
+    /* Gradients */
+    --gradient-cosmic: linear-gradient(180deg, hsl(215 30% 5%) 0%, hsl(215 20% 8%) 50%, hsl(215 25% 10%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-dim)) 100%);
+    --gradient-card: linear-gradient(180deg, hsl(215 15% 10% / 0.8) 0%, hsl(215 15% 6% / 0.9) 100%);
+
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(var(--gold) / 0.3);
+    --shadow-cosmic: 0 20px 60px hsl(var(--cosmic-dark) / 0.8);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-transparent text-foreground antialiased;
+    font-family: 'Iceland', sans-serif;
+    min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Iceland', sans-serif;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+}
+
+@layer components {
+  /* Cosmic glass card effect */
+  .glass-card {
+    background: linear-gradient(180deg, hsl(215 15% 10% / 0.6) 0%, hsl(215 15% 6% / 0.8) 100%);
+    backdrop-filter: blur(20px);
+    border: 1px solid hsl(215 15% 18% / 0.5);
+    box-shadow: 0 8px 32px hsl(215 30% 3% / 0.5), inset 0 1px 0 hsl(215 10% 25% / 0.2);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-500;
+  }
+
+  .glass-card-hover:hover {
+    border-color: hsl(var(--gold) / 0.4);
+    box-shadow: 0 12px 40px hsl(215 30% 3% / 0.6), 0 0 30px hsl(var(--gold) / 0.15), inset 0 1px 0 hsl(var(--gold) / 0.1);
+    transform: translateY(-4px);
+  }
+
+  /* Cosmic text effects */
+  .text-glow {
+    text-shadow: 0 0 20px hsl(var(--gold) / 0.5), 0 0 40px hsl(var(--gold) / 0.3);
+  }
+
+  .text-cosmic {
+    background: linear-gradient(135deg, hsl(var(--star-white)) 0%, hsl(var(--gold)) 50%, hsl(var(--gold-glow)) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Star field background */
+  .star-field {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .star-field::before,
+  .star-field::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(1px 1px at 20px 30px, hsl(var(--star-white)), transparent),
+      radial-gradient(1px 1px at 40px 70px, hsl(var(--star-white) / 0.8), transparent),
+      radial-gradient(1px 1px at 50px 160px, hsl(var(--star-white) / 0.6), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(var(--star-white)), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(var(--star-white) / 0.7), transparent),
+      radial-gradient(2px 2px at 160px 120px, hsl(var(--gold) / 0.5), transparent);
+    background-repeat: repeat;
+    background-size: 200px 200px;
+    animation: twinkle 4s ease-in-out infinite alternate;
+  }
+
+  .star-field::after {
+    background-size: 300px 300px;
+    animation-delay: 2s;
+    opacity: 0.6;
+  }
+
+  @keyframes twinkle {
+    0% { opacity: 0.5; }
+    100% { opacity: 1; }
+  }
+
+  /* Zodiac symbol styling */
+  .zodiac-symbol {
+    font-family: 'Iceland', sans-serif;
+    color: hsl(var(--gold));
+    text-shadow: 0 0 10px hsl(var(--gold) / 0.5);
+  }
+
+  /* Input cosmic style */
+  .input-cosmic {
+    background: hsl(215 15% 8% / 0.8);
+    border: 1px solid hsl(215 15% 18% / 0.5);
+    transition: all 0.3s ease;
+  }
+
+  .input-cosmic:focus {
+    border-color: hsl(var(--gold) / 0.5);
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.2);
+    outline: none;
+  }
+
+  /* Button cosmic variants */
+  .btn-cosmic {
+    background: linear-gradient(135deg, hsl(var(--gold)) 0%, hsl(var(--gold-dim)) 100%);
+    color: hsl(var(--cosmic-dark));
+    font-family: 'Iceland', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px hsl(var(--gold) / 0.3);
+  }
+
+  .btn-cosmic:hover {
+    box-shadow: 0 6px 30px hsl(var(--gold) / 0.5);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline-cosmic {
+    background: transparent;
+    border: 1px solid hsl(var(--gold));
+    color: hsl(var(--gold));
+    font-family: 'Iceland', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-outline-cosmic::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: hsl(var(--gold) / 0.1);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .btn-outline-cosmic:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-outline-cosmic:hover {
+    box-shadow: 0 0 20px hsl(var(--gold) / 0.3);
+  }
+
+  /* Pulsing button border */
+  .btn-pulse {
+    animation: pulse-border 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse-border {
+    0%, 100% { box-shadow: 0 0 0 0 hsl(var(--gold) / 0.4); }
+    50% { box-shadow: 0 0 0 8px hsl(var(--gold) / 0); }
+  }
+
+  /* Subtle grain texture overlay */
+  .grain-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    z-index: 1;
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--cosmic-dark));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--gold-dim));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--gold) / 0.7);
+  }
+
+  /* Constellation line animation */
+  .constellation-line {
+    stroke: hsl(var(--gold) / 0.3);
+    stroke-width: 1;
+    stroke-dasharray: 4 4;
+    animation: dash 20s linear infinite;
+  }
+
+  @keyframes dash {
+    to {
+      stroke-dashoffset: -100;
+    }
+  }
+}
+
+@layer utilities {
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  .animate-float-slow {
+    animation: float 10s ease-in-out infinite;
+  }
+
+  .animate-float-reverse {
+    animation: float-reverse 8s ease-in-out infinite;
+  }
+
+  .animate-spin-slow {
+    animation: spin 60s linear infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(2deg); }
+  }
+
+  @keyframes float-reverse {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(20px) rotate(-2deg); }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% { opacity: 0.5; filter: blur(0px); }
+    50% { opacity: 1; filter: blur(2px); }
+  }
+}
